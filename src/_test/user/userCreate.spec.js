@@ -1,8 +1,10 @@
-const request = require('supertest');
-// const {expect} = require('chai');
 
-const console = require("node:console");
-const url = 'http://localhost:7000/'
+const {expect} = require('chai');
+const {userCreateQ} = require('./queries');
+// const console = require("node:console");
+const {user} = require('./data');
+const gqlRequest = require('../gqlRequest');
+// const url = 'http://localhost:7000/'
 
 let respData =null;
 let postData = null;
@@ -12,23 +14,10 @@ describe('USER CREATE', () => {
     describe('USER CREATE - POSITIVE TEST', () => {
         it('user create all fields', (done) => {
             postData = {
-                query: `mutation UserCreate($userInput: UserFields) {
-  userCreate(userInput: $userInput) {
-    _id
-    firstName
-    lastName
-  }
-}`,
-                variables: {
-                    userInput: {
-                        firstName: 'testFirstName',
-                        lastName: 'testLastName'
-                    }
-                }
+                query: userCreateQ,
+                variables: user,
             }
-            request(url)
-                .post('/')
-                .send()
+            gqlRequest(postData)
                 .expect(200)
                 .end((err, res) => {
                     if (err) return done(err)
@@ -36,6 +25,7 @@ describe('USER CREATE', () => {
                     console.log(respData);
                     // expect(respData.eq())
                     done()
+
                 })
         })
     })
