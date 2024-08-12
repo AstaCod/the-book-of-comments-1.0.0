@@ -20,6 +20,6 @@ const connectDB = async () => {
 };
 
 connectDB()
-server.listen({port: 2000}).then(({ url }) => {
+server.listen({port: 7000}).then(({ url }) => {
     console.log(`🚀  Server ready at ${url}`);
 });
